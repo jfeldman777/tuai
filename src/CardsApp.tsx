@@ -322,6 +322,7 @@ export default function CardsApp() {
   const [showCorrection, setShowCorrection] = useState(false);
   const [showFinalResults, setShowFinalResults] = useState(false);
   const [currentRow, setCurrentRow] = useState<'first' | 'second' | 'third' | 'fourth' | 'fifth'>('first');
+  const [currentScreen, setCurrentScreen] = useState<'start' | 'cards'>('start');
 
   // Всегда вычислять isValid на основе актуальных значений
   const isValid = currentRow === 'first'
@@ -454,6 +455,35 @@ export default function CardsApp() {
     setShowCorrection(false);
   };
 
+  // Сбросить все состояния для нового прохождения
+  const resetAll = () => {
+    setStep(0);
+    setValues(firstRow);
+    setSecondValues(secondRow);
+    setThirdValues(thirdRow);
+    setFourthValues(fourthRow);
+    setFifthValues(fifthRow);
+    setShowCorrection(false);
+    setShowFinalResults(false);
+    setCurrentRow('first');
+    setCurrentScreen('start');
+  };
+
+  if (currentScreen === 'start') {
+    return (
+      <div className="app-container" style={{ textAlign: 'center', marginTop: '60px' }}>
+        <h1>карта личности и карта задачи </h1>
+        <button
+          className="next-button"
+          style={{ fontSize: '1.5em', padding: '20px 40px', marginTop: '40px' }}
+          onClick={() => setCurrentScreen('cards')}
+        >
+          карта личности
+        </button>
+      </div>
+    );
+  }
+
   if (showFinalResults) {
     return (
       <div className="app-container">
@@ -548,6 +578,13 @@ export default function CardsApp() {
             </tr>
           </tbody>
         </table>
+        <button
+          className="next-button"
+          style={{ marginTop: '30px' }}
+          onClick={resetAll}
+        >
+          ДОМОЙ
+        </button>
       </div>
     );
   }
