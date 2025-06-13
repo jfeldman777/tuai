@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Select from 'react-select';
 import type { StylesConfig, SingleValue } from 'react-select';
+import Professions from './Professions';
 
 // Структура для первого ряда
 const firstRow = {
@@ -322,7 +323,9 @@ export default function CardsApp() {
   const [showCorrection, setShowCorrection] = useState(false);
   const [showFinalResults, setShowFinalResults] = useState(false);
   const [currentRow, setCurrentRow] = useState<'first' | 'second' | 'third' | 'fourth' | 'fifth'>('first');
-  const [currentScreen, setCurrentScreen] = useState<'start' | 'cards'>('start');
+  const [currentScreen, setCurrentScreen] = useState<'start' | 'cards' | 'professions'>('start');
+  const [compareMode, setCompareMode] = useState(false);
+  const [userMap, setUserMap] = useState<any>(null);
 
   // Всегда вычислять isValid на основе актуальных значений
   const isValid = currentRow === 'first'
@@ -475,16 +478,58 @@ export default function CardsApp() {
         <h1>карта личности и карта задачи </h1>
         <button
           className="next-button"
-          style={{ fontSize: '1.5em', padding: '20px 40px', marginTop: '40px' }}
+          style={{ fontSize: '1.5em', padding: '20px 40px', marginTop: '40px', marginRight: '20px' }}
           onClick={() => setCurrentScreen('cards')}
         >
           карта личности
+        </button>
+        <button
+          className="next-button"
+          style={{ fontSize: '1.5em', padding: '20px 40px', marginTop: '40px' }}
+          onClick={() => setCurrentScreen('professions')}
+        >
+          Профессии
         </button>
       </div>
     );
   }
 
+  if (currentScreen === 'professions') {
+    return (
+      <Professions
+        onHome={() => { setCurrentScreen('start'); setCompareMode(false); }}
+        compareMode={compareMode}
+        userMap={userMap}
+      />
+    );
+  }
+
   if (showFinalResults) {
+    // Собираем карту пользователя для передачи в сравнение
+    const userMapObj = {
+      ear: values.ear,
+      eye: values.eye,
+      hand: values.hand,
+      nose: values.nose,
+      picture: secondValues.picture,
+      scheme: secondValues.scheme,
+      text: secondValues.text,
+      images: thirdValues.images,
+      scenarios: thirdValues.scenarios,
+      meanings: thirdValues.meanings,
+      choleric: fourthValues.choleric,
+      sanguine: fourthValues.sanguine,
+      phlegmatic: fourthValues.phlegmatic,
+      melancholic: fourthValues.melancholic,
+      level1: fifthValues.level1,
+      level2: fifthValues.level2,
+      level3: fifthValues.level3,
+      level4: fifthValues.level4,
+      level5: fifthValues.level5,
+      level6: fifthValues.level6,
+      level7: fifthValues.level7,
+      level8: fifthValues.level8
+    };
     return (
       <div className="app-container">
         <h2>Итоговые результаты:</h2>
@@ -580,10 +625,21 @@ export default function CardsApp() {
         </table>
         <button
           className="next-button"
-          style={{ marginTop: '30px' }}
+          style={{ marginTop: '30px', marginRight: '20px' }}
           onClick={resetAll}
         >
           ДОМОЙ
+        </button>
+        <button
+          className="next-button"
+          style={{ marginTop: '30px' }}
+          onClick={() => {
+            setUserMap(userMapObj);
+            setCompareMode(true);
+            setCurrentScreen('professions');
+          }}
+        >
+          Сравнить с профессиями
         </button>
       </div>
     );
@@ -864,7 +920,7 @@ export default function CardsApp() {
           </button>
         )}
         {!isValid && (
-          <div className="error-message">
+          <div className="error-message" style={{ fontSize: '1.3em', fontWeight: 'bold' }}>
             {currentRow === 'first'
               ? 'Пожалуйста, исправьте значения так, чтобы было хотя бы одно "много", хотя бы одно "средне" и хотя бы одно "мало"'
               : currentRow === 'fourth'
