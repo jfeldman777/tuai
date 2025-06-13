@@ -299,6 +299,19 @@ const selectStyles: StylesConfig<OptionType, false> = {
   }),
 };
 
+type ValueLabel = 'много' | 'средне' | 'мало';
+
+// Стили для цветовой индикации
+const valueStyles: Record<ValueLabel, React.CSSProperties> = {
+  много: { backgroundColor: '#90EE90', padding: '10px', borderRadius: '4px' },
+  средне: { backgroundColor: '#FFD700', padding: '10px', borderRadius: '4px' },
+  мало: { backgroundColor: '#FFB6C1', padding: '10px', borderRadius: '4px' }
+};
+
+function getValueLabel(value: number): ValueLabel {
+  return value === 1 ? 'много' : value === 0 ? 'средне' : 'мало';
+}
+
 export default function CardsApp() {
   const [step, setStep] = useState(0);
   const [values, setValues] = useState(firstRow);
@@ -307,6 +320,7 @@ export default function CardsApp() {
   const [fourthValues, setFourthValues] = useState(fourthRow);
   const [fifthValues, setFifthValues] = useState(fifthRow);
   const [showCorrection, setShowCorrection] = useState(false);
+  const [showFinalResults, setShowFinalResults] = useState(false);
   const [currentRow, setCurrentRow] = useState<'first' | 'second' | 'third' | 'fourth' | 'fifth'>('first');
 
   // Всегда вычислять isValid на основе актуальных значений
@@ -426,10 +440,6 @@ export default function CardsApp() {
     }
   };
 
-  const getValueLabel = (value: number): string => {
-    return value === 1 ? 'много' : value === 0 ? 'средне' : 'мало';
-  };
-
   const handleNext = () => {
     if (currentRow === 'first') {
       setCurrentRow('second');
@@ -444,315 +454,374 @@ export default function CardsApp() {
     setShowCorrection(false);
   };
 
+  if (showFinalResults) {
+    return (
+      <div className="app-container">
+        <h2>Итоговые результаты:</h2>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px', textAlign: 'center' }}>
+          <tbody>
+            {/* Первый ряд */}
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>1 ряд</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Ухо</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Глаз</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Рука</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Нос и язык</td>
+            </tr>
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+              <td style={valueStyles[getValueLabel(values.ear)]}>{getValueLabel(values.ear)}</td>
+              <td style={valueStyles[getValueLabel(values.eye)]}>{getValueLabel(values.eye)}</td>
+              <td style={valueStyles[getValueLabel(values.hand)]}>{getValueLabel(values.hand)}</td>
+              <td style={valueStyles[getValueLabel(values.nose)]}>{getValueLabel(values.nose)}</td>
+            </tr>
+            {/* Второй ряд */}
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>2 ряд</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Картинка</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Схема</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Текст</td>
+            </tr>
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+              <td style={valueStyles[getValueLabel(secondValues.picture)]}>{getValueLabel(secondValues.picture)}</td>
+              <td style={valueStyles[getValueLabel(secondValues.scheme)]}>{getValueLabel(secondValues.scheme)}</td>
+              <td style={valueStyles[getValueLabel(secondValues.text)]}>{getValueLabel(secondValues.text)}</td>
+            </tr>
+            {/* Третий ряд */}
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>3 ряд</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Образы</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Сценарии</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Смыслы</td>
+            </tr>
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+              <td style={valueStyles[getValueLabel(thirdValues.images)]}>{getValueLabel(thirdValues.images)}</td>
+              <td style={valueStyles[getValueLabel(thirdValues.scenarios)]}>{getValueLabel(thirdValues.scenarios)}</td>
+              <td style={valueStyles[getValueLabel(thirdValues.meanings)]}>{getValueLabel(thirdValues.meanings)}</td>
+            </tr>
+            {/* Четвертый ряд */}
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>4 ряд</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Холерик</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Сангвиник</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Флегматик</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Меланхолик</td>
+            </tr>
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+              <td style={valueStyles[getValueLabel(fourthValues.choleric)]}>{getValueLabel(fourthValues.choleric)}</td>
+              <td style={valueStyles[getValueLabel(fourthValues.sanguine)]}>{getValueLabel(fourthValues.sanguine)}</td>
+              <td style={valueStyles[getValueLabel(fourthValues.phlegmatic)]}>{getValueLabel(fourthValues.phlegmatic)}</td>
+              <td style={valueStyles[getValueLabel(fourthValues.melancholic)]}>{getValueLabel(fourthValues.melancholic)}</td>
+            </tr>
+            {/* Пятый ряд */}
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>5 ряд</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 1</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 2</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 3</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 4</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 5</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 6</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 7</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 8</td>
+            </tr>
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+              <td style={valueStyles[getValueLabel(fifthValues.level1)]}>{getValueLabel(fifthValues.level1)}</td>
+              <td style={valueStyles[getValueLabel(fifthValues.level2)]}>{getValueLabel(fifthValues.level2)}</td>
+              <td style={valueStyles[getValueLabel(fifthValues.level3)]}>{getValueLabel(fifthValues.level3)}</td>
+              <td style={valueStyles[getValueLabel(fifthValues.level4)]}>{getValueLabel(fifthValues.level4)}</td>
+              <td style={valueStyles[getValueLabel(fifthValues.level5)]}>{getValueLabel(fifthValues.level5)}</td>
+              <td style={valueStyles[getValueLabel(fifthValues.level6)]}>{getValueLabel(fifthValues.level6)}</td>
+              <td style={valueStyles[getValueLabel(fifthValues.level7)]}>{getValueLabel(fifthValues.level7)}</td>
+              <td style={valueStyles[getValueLabel(fifthValues.level8)]}>{getValueLabel(fifthValues.level8)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
   if (showCorrection) {
     return (
       <div className="app-container">
         <h3>Проверьте и при необходимости исправьте значения:</h3>
         {currentRow === 'first' ? (
-          <>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Ухо:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Ухо:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(values.ear))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('ear', option!.value, 'first')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Глаз:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Глаз:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(values.eye))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('eye', option!.value, 'first')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Рука:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Рука:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(values.hand))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('hand', option!.value, 'first')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Нос и язык:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Нос и язык:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(values.nose))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('nose', option!.value, 'first')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-          </>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         ) : currentRow === 'second' ? (
-          <>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Картинка:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Картинка:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(secondValues.picture))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('picture', option!.value, 'second')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Схема:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Схема:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(secondValues.scheme))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('scheme', option!.value, 'second')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Текст:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Текст:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(secondValues.text))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('text', option!.value, 'second')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-          </>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         ) : currentRow === 'third' ? (
-          <>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Образы:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Образы:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(thirdValues.images))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('images', option!.value, 'third')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Сценарии:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Сценарии:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(thirdValues.scenarios))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('scenarios', option!.value, 'third')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Смыслы:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Смыслы:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(thirdValues.meanings))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('meanings', option!.value, 'third')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-          </>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         ) : currentRow === 'fourth' ? (
-          <>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Холерик:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Холерик:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fourthValues.choleric))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('choleric', option!.value, 'fourth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Сангвиник:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Сангвиник:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fourthValues.sanguine))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('sanguine', option!.value, 'fourth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Флегматик:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Флегматик:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fourthValues.phlegmatic))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('phlegmatic', option!.value, 'fourth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Меланхолик:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Меланхолик:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fourthValues.melancholic))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('melancholic', option!.value, 'fourth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-          </>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         ) : (
-          <>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Уровень 1:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 1:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level1))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('level1', option!.value, 'fifth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Уровень 2:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 2:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level2))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('level2', option!.value, 'fifth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Уровень 3:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 3:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level3))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('level3', option!.value, 'fifth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Уровень 4:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 4:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level4))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('level4', option!.value, 'fifth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Уровень 5:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 5:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level5))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('level5', option!.value, 'fifth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Уровень 6:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 6:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level6))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('level6', option!.value, 'fifth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Уровень 7:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 7:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level7))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('level7', option!.value, 'fifth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-            <div className="form-group">
-              <label style={{ fontSize: '2em', marginRight: 10 }}>
-                Уровень 8:
-                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 8:</td>
+                <td>
                   <Select
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level8))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('level8', option!.value, 'fifth')}
                     styles={selectStyles}
                   />
-                </div>
-              </label>
-            </div>
-          </>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         )}
         {isValid && (
           <button 
-            onClick={currentRow === 'fifth' ? () => alert('Работа завершена!') : handleNext}
+            onClick={currentRow === 'fifth' ? () => {
+              setShowFinalResults(true);
+            } : handleNext}
             className="next-button"
           >
             {currentRow === 'fifth' ? 'ГОТОВО' : 'ДАЛЬШЕ'}
