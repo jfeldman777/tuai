@@ -67,3 +67,11 @@ button:focus-visible {
     background-color: #b0c5c3;
   }
 }
+
+.question-title {
+  font-size: 2em;
+}
+
+.answer-button {
+  font-size: 1.5em;
+}

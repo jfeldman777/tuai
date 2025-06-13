@@ -40,3 +40,51 @@
 .read-the-docs {
   color: #888;
 }
+
+.app-container {
+  padding: 20px;
+}
+
+.question-title {
+  font-size: 24px;
+}
+
+.answer-button {
+  font-size: 18px;
+  margin: 10px;
+  padding: 10px 20px;
+}
+
+.next-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.error-message {
+  color: red;
+}
+
+.error-rules {
+  white-space: pre-wrap;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.select-container {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.select-container select,
+.select-container option {
+  font-size: 2.5em !important;
+  height: 3em !important;
+  min-width: 180px !important;
+  padding: 10px 16px !important;
+}

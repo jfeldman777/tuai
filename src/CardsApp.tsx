@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Select from 'react-select';
+import type { StylesConfig, SingleValue } from 'react-select';
 
 // Структура для первого ряда
 const firstRow = {
@@ -272,6 +274,31 @@ function getDistributionRules(fourthRowValues: Record<string, number>): string {
 
 const toNum = (v: string) => v === 'много' ? 1 : v === 'средне' ? 0 : -1;
 
+const selectOptions = [
+  { value: 'много', label: 'много' },
+  { value: 'средне', label: 'средне' },
+  { value: 'мало', label: 'мало' }
+];
+
+type OptionType = { value: string; label: string };
+
+const selectStyles: StylesConfig<OptionType, false> = {
+  control: (base) => ({
+    ...base,
+    fontSize: '1em',
+    minHeight: '1em',
+    minWidth: '180px',
+  }),
+  menu: (base) => ({
+    ...base,
+    fontSize: '1em',
+  }),
+  singleValue: (base) => ({
+    ...base,
+    fontSize: '1em',
+  }),
+};
+
 export default function CardsApp() {
   const [step, setStep] = useState(0);
   const [values, setValues] = useState(firstRow);
@@ -419,306 +446,306 @@ export default function CardsApp() {
 
   if (showCorrection) {
     return (
-      <div style={{ padding: 20 }}>
+      <div className="app-container">
         <h3>Проверьте и при необходимости исправьте значения:</h3>
         {currentRow === 'first' ? (
           <>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Ухо:
-                <select 
-                  value={getValueLabel(values.ear)} 
-                  onChange={(e) => handleValueChange('ear', e.target.value, 'first')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(values.ear))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('ear', option!.value, 'first')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Глаз:
-                <select 
-                  value={getValueLabel(values.eye)} 
-                  onChange={(e) => handleValueChange('eye', e.target.value, 'first')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(values.eye))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('eye', option!.value, 'first')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Рука:
-                <select 
-                  value={getValueLabel(values.hand)} 
-                  onChange={(e) => handleValueChange('hand', e.target.value, 'first')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(values.hand))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('hand', option!.value, 'first')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Нос и язык:
-                <select 
-                  value={getValueLabel(values.nose)} 
-                  onChange={(e) => handleValueChange('nose', e.target.value, 'first')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(values.nose))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('nose', option!.value, 'first')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
           </>
         ) : currentRow === 'second' ? (
           <>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Картинка:
-                <select 
-                  value={getValueLabel(secondValues.picture)} 
-                  onChange={(e) => handleValueChange('picture', e.target.value, 'second')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(secondValues.picture))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('picture', option!.value, 'second')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Схема:
-                <select 
-                  value={getValueLabel(secondValues.scheme)} 
-                  onChange={(e) => handleValueChange('scheme', e.target.value, 'second')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(secondValues.scheme))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('scheme', option!.value, 'second')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Текст:
-                <select 
-                  value={getValueLabel(secondValues.text)} 
-                  onChange={(e) => handleValueChange('text', e.target.value, 'second')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(secondValues.text))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('text', option!.value, 'second')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
           </>
         ) : currentRow === 'third' ? (
           <>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Образы:
-                <select 
-                  value={getValueLabel(thirdValues.images)} 
-                  onChange={(e) => handleValueChange('images', e.target.value, 'third')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(thirdValues.images))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('images', option!.value, 'third')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Сценарии:
-                <select 
-                  value={getValueLabel(thirdValues.scenarios)} 
-                  onChange={(e) => handleValueChange('scenarios', e.target.value, 'third')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(thirdValues.scenarios))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('scenarios', option!.value, 'third')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Смыслы:
-                <select 
-                  value={getValueLabel(thirdValues.meanings)} 
-                  onChange={(e) => handleValueChange('meanings', e.target.value, 'third')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(thirdValues.meanings))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('meanings', option!.value, 'third')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
           </>
         ) : currentRow === 'fourth' ? (
           <>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Холерик:
-                <select 
-                  value={getValueLabel(fourthValues.choleric)} 
-                  onChange={(e) => handleValueChange('choleric', e.target.value, 'fourth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fourthValues.choleric))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('choleric', option!.value, 'fourth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Сангвиник:
-                <select 
-                  value={getValueLabel(fourthValues.sanguine)} 
-                  onChange={(e) => handleValueChange('sanguine', e.target.value, 'fourth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fourthValues.sanguine))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('sanguine', option!.value, 'fourth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Флегматик:
-                <select 
-                  value={getValueLabel(fourthValues.phlegmatic)} 
-                  onChange={(e) => handleValueChange('phlegmatic', e.target.value, 'fourth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fourthValues.phlegmatic))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('phlegmatic', option!.value, 'fourth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Меланхолик:
-                <select 
-                  value={getValueLabel(fourthValues.melancholic)} 
-                  onChange={(e) => handleValueChange('melancholic', e.target.value, 'fourth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fourthValues.melancholic))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('melancholic', option!.value, 'fourth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
           </>
         ) : (
           <>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Уровень 1:
-                <select 
-                  value={getValueLabel(fifthValues.level1)} 
-                  onChange={(e) => handleValueChange('level1', e.target.value, 'fifth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level1))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level1', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Уровень 2:
-                <select 
-                  value={getValueLabel(fifthValues.level2)} 
-                  onChange={(e) => handleValueChange('level2', e.target.value, 'fifth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level2))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level2', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Уровень 3:
-                <select 
-                  value={getValueLabel(fifthValues.level3)} 
-                  onChange={(e) => handleValueChange('level3', e.target.value, 'fifth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level3))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level3', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Уровень 4:
-                <select 
-                  value={getValueLabel(fifthValues.level4)} 
-                  onChange={(e) => handleValueChange('level4', e.target.value, 'fifth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level4))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level4', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Уровень 5:
-                <select 
-                  value={getValueLabel(fifthValues.level5)} 
-                  onChange={(e) => handleValueChange('level5', e.target.value, 'fifth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level5))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level5', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Уровень 6:
-                <select 
-                  value={getValueLabel(fifthValues.level6)} 
-                  onChange={(e) => handleValueChange('level6', e.target.value, 'fifth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level6))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level6', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Уровень 7:
-                <select 
-                  value={getValueLabel(fifthValues.level7)} 
-                  onChange={(e) => handleValueChange('level7', e.target.value, 'fifth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level7))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level7', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
-            <div style={{ marginBottom: 20 }}>
-              <label>
+            <div className="form-group">
+              <label style={{ fontSize: '2em', marginRight: 10 }}>
                 Уровень 8:
-                <select 
-                  value={getValueLabel(fifthValues.level8)} 
-                  onChange={(e) => handleValueChange('level8', e.target.value, 'fifth')}
-                >
-                  <option value="много">много</option>
-                  <option value="средне">средне</option>
-                  <option value="мало">мало</option>
-                </select>
+                <div style={{ display: 'inline-block', marginLeft: 10 }}>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level8))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level8', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </div>
               </label>
             </div>
           </>
@@ -726,20 +753,13 @@ export default function CardsApp() {
         {isValid && (
           <button 
             onClick={currentRow === 'fifth' ? () => alert('Работа завершена!') : handleNext}
-            style={{ 
-              padding: '10px 20px', 
-              fontSize: '16px', 
-              backgroundColor: '#4CAF50', 
-              color: 'white', 
-              border: 'none', 
-              borderRadius: '4px' 
-            }}
+            className="next-button"
           >
             {currentRow === 'fifth' ? 'ГОТОВО' : 'ДАЛЬШЕ'}
           </button>
         )}
         {!isValid && (
-          <div style={{ color: 'red' }}>
+          <div className="error-message">
             {currentRow === 'first'
               ? 'Пожалуйста, исправьте значения так, чтобы было хотя бы одно "много", хотя бы одно "средне" и хотя бы одно "мало"'
               : currentRow === 'fourth'
@@ -748,13 +768,7 @@ export default function CardsApp() {
               ? (
                 <>
                   <p>Пожалуйста, исправьте значения так, чтобы было: много - 2 раза, средне - 2 раза, мало - 4 раза.</p>
-                  <pre style={{ 
-                    whiteSpace: 'pre-wrap', 
-                    backgroundColor: '#f5f5f5', 
-                    padding: '10px', 
-                    borderRadius: '4px',
-                    marginTop: '10px'
-                  }}>
+                  <pre className="error-rules">
                     {getDistributionRules(fourthValues)}
                   </pre>
                 </>
@@ -767,50 +781,50 @@ export default function CardsApp() {
   }
 
   return (
-    <div style={{ padding: 20 }}>
+    <div className="app-container">
       {currentRow === 'first' ? (
         step < firstRowQuestions.length ? (
           <div>
-            <h2 style={{ fontSize: '24px' }}>{firstRowQuestions[step].text}</h2>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(1)}>Люблю</button>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(0)}>Не знаю</button>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(-1)}>Равнодушен</button>
+            <h2 className="question-title">{firstRowQuestions[step].text}</h2>
+            <button className="answer-button" onClick={() => handleAnswer(1)}>Люблю</button>
+            <button className="answer-button" onClick={() => handleAnswer(0)}>Не знаю</button>
+            <button className="answer-button" onClick={() => handleAnswer(-1)}>Равнодушен</button>
           </div>
         ) : null
       ) : currentRow === 'second' ? (
         step < secondRowQuestions.length ? (
           <div>
-            <h2 style={{ fontSize: '24px' }}>{secondRowQuestions[step].text}</h2>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(1)}>Да</button>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(0)}>Не знаю</button>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(-1)}>Нет</button>
+            <h2 className="question-title">{secondRowQuestions[step].text}</h2>
+            <button className="answer-button" onClick={() => handleAnswer(1)}>Да</button>
+            <button className="answer-button" onClick={() => handleAnswer(0)}>Не знаю</button>
+            <button className="answer-button" onClick={() => handleAnswer(-1)}>Нет</button>
           </div>
         ) : null
       ) : currentRow === 'third' ? (
         step < thirdRowQuestions.length ? (
           <div>
-            <h2 style={{ fontSize: '24px' }}>{thirdRowQuestions[step].text}</h2>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(1)}>Да</button>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(0)}>Не знаю</button>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(-1)}>Нет</button>
+            <h2 className="question-title">{thirdRowQuestions[step].text}</h2>
+            <button className="answer-button" onClick={() => handleAnswer(1)}>Да</button>
+            <button className="answer-button" onClick={() => handleAnswer(0)}>Не знаю</button>
+            <button className="answer-button" onClick={() => handleAnswer(-1)}>Нет</button>
           </div>
         ) : null
       ) : currentRow === 'fourth' ? (
         step < fourthRowQuestions.length ? (
           <div>
-            <h2 style={{ fontSize: '24px' }}>{fourthRowQuestions[step].text}</h2>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(1)}>Да</button>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(0)}>Не знаю</button>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(-1)}>Нет</button>
+            <h2 className="question-title">{fourthRowQuestions[step].text}</h2>
+            <button className="answer-button" onClick={() => handleAnswer(1)}>Да</button>
+            <button className="answer-button" onClick={() => handleAnswer(0)}>Не знаю</button>
+            <button className="answer-button" onClick={() => handleAnswer(-1)}>Нет</button>
           </div>
         ) : null
       ) : (
         step < fifthRowQuestions.length ? (
           <div>
-            <h2 style={{ fontSize: '24px' }}>{fifthRowQuestions[step].text}</h2>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(1)}>Да</button>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(0)}>Не знаю</button>
-            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(-1)}>Нет</button>
+            <h2 className="question-title">{fifthRowQuestions[step].text}</h2>
+            <button className="answer-button" onClick={() => handleAnswer(1)}>Да</button>
+            <button className="answer-button" onClick={() => handleAnswer(0)}>Не знаю</button>
+            <button className="answer-button" onClick={() => handleAnswer(-1)}>Нет</button>
           </div>
         ) : null
       )}
