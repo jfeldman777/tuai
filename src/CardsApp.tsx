@@ -771,46 +771,46 @@ export default function CardsApp() {
       {currentRow === 'first' ? (
         step < firstRowQuestions.length ? (
           <div>
-            <h2>{firstRowQuestions[step].text}</h2>
-            <button onClick={() => handleAnswer(1)}>Люблю</button>
-            <button onClick={() => handleAnswer(0)}>Не знаю</button>
-            <button onClick={() => handleAnswer(-1)}>Равнодушен</button>
+            <h2 style={{ fontSize: '24px' }}>{firstRowQuestions[step].text}</h2>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(1)}>Люблю</button>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(0)}>Не знаю</button>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(-1)}>Равнодушен</button>
           </div>
         ) : null
       ) : currentRow === 'second' ? (
         step < secondRowQuestions.length ? (
           <div>
-            <h2>{secondRowQuestions[step].text}</h2>
-            <button onClick={() => handleAnswer(1)}>Да</button>
-            <button onClick={() => handleAnswer(0)}>Не знаю</button>
-            <button onClick={() => handleAnswer(-1)}>Нет</button>
+            <h2 style={{ fontSize: '24px' }}>{secondRowQuestions[step].text}</h2>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(1)}>Да</button>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(0)}>Не знаю</button>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(-1)}>Нет</button>
           </div>
         ) : null
       ) : currentRow === 'third' ? (
         step < thirdRowQuestions.length ? (
           <div>
-            <h2>{thirdRowQuestions[step].text}</h2>
-            <button onClick={() => handleAnswer(1)}>Да</button>
-            <button onClick={() => handleAnswer(0)}>Не знаю</button>
-            <button onClick={() => handleAnswer(-1)}>Нет</button>
+            <h2 style={{ fontSize: '24px' }}>{thirdRowQuestions[step].text}</h2>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(1)}>Да</button>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(0)}>Не знаю</button>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(-1)}>Нет</button>
           </div>
         ) : null
       ) : currentRow === 'fourth' ? (
         step < fourthRowQuestions.length ? (
           <div>
-            <h2>{fourthRowQuestions[step].text}</h2>
-            <button onClick={() => handleAnswer(1)}>Да</button>
-            <button onClick={() => handleAnswer(0)}>Не знаю</button>
-            <button onClick={() => handleAnswer(-1)}>Нет</button>
+            <h2 style={{ fontSize: '24px' }}>{fourthRowQuestions[step].text}</h2>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(1)}>Да</button>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(0)}>Не знаю</button>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(-1)}>Нет</button>
           </div>
         ) : null
       ) : (
         step < fifthRowQuestions.length ? (
           <div>
-            <h2>{fifthRowQuestions[step].text}</h2>
-            <button onClick={() => handleAnswer(1)}>Да</button>
-            <button onClick={() => handleAnswer(0)}>Не знаю</button>
-            <button onClick={() => handleAnswer(-1)}>Нет</button>
+            <h2 style={{ fontSize: '24px' }}>{fifthRowQuestions[step].text}</h2>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(1)}>Да</button>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(0)}>Не знаю</button>
+            <button style={{ fontSize: '18px', margin: '10px', padding: '10px 20px' }} onClick={() => handleAnswer(-1)}>Нет</button>
           </div>
         ) : null
       )}
