@@ -516,27 +516,34 @@ export default function CardsApp() {
               <td style={valueStyles[getValueLabel(fourthValues.phlegmatic)]}>{getValueLabel(fourthValues.phlegmatic)}</td>
               <td style={valueStyles[getValueLabel(fourthValues.melancholic)]}>{getValueLabel(fourthValues.melancholic)}</td>
             </tr>
-            {/* Пятый ряд */}
+            {/* Пятый ряд: уровни 1,3,2,4 */}
             <tr>
               <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>5 ряд</td>
               <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 1</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 2</td>
               <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 3</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 2</td>
               <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 4</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 5</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 6</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 7</td>
-              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 8</td>
             </tr>
             <tr>
               <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
               <td style={valueStyles[getValueLabel(fifthValues.level1)]}>{getValueLabel(fifthValues.level1)}</td>
-              <td style={valueStyles[getValueLabel(fifthValues.level2)]}>{getValueLabel(fifthValues.level2)}</td>
               <td style={valueStyles[getValueLabel(fifthValues.level3)]}>{getValueLabel(fifthValues.level3)}</td>
+              <td style={valueStyles[getValueLabel(fifthValues.level2)]}>{getValueLabel(fifthValues.level2)}</td>
               <td style={valueStyles[getValueLabel(fifthValues.level4)]}>{getValueLabel(fifthValues.level4)}</td>
+            </tr>
+            {/* Шестой ряд: уровни 5,7,6,8 */}
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>6 ряд</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 5</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 7</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 6</td>
+              <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 8</td>
+            </tr>
+            <tr>
+              <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
               <td style={valueStyles[getValueLabel(fifthValues.level5)]}>{getValueLabel(fifthValues.level5)}</td>
-              <td style={valueStyles[getValueLabel(fifthValues.level6)]}>{getValueLabel(fifthValues.level6)}</td>
               <td style={valueStyles[getValueLabel(fifthValues.level7)]}>{getValueLabel(fifthValues.level7)}</td>
+              <td style={valueStyles[getValueLabel(fifthValues.level6)]}>{getValueLabel(fifthValues.level6)}</td>
               <td style={valueStyles[getValueLabel(fifthValues.level8)]}>{getValueLabel(fifthValues.level8)}</td>
             </tr>
           </tbody>
@@ -736,6 +743,15 @@ export default function CardsApp() {
                     styles={selectStyles}
                   />
                 </td>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 5:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level5))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level5', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
               </tr>
               <tr>
                 <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 2:</td>
@@ -744,6 +760,15 @@ export default function CardsApp() {
                     options={selectOptions}
                     value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level2))}
                     onChange={(option: SingleValue<OptionType>) => handleValueChange('level2', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 6:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level6))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level6', option!.value, 'fifth')}
                     styles={selectStyles}
                   />
                 </td>
@@ -758,41 +783,6 @@ export default function CardsApp() {
                     styles={selectStyles}
                   />
                 </td>
-              </tr>
-              <tr>
-                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 4:</td>
-                <td>
-                  <Select
-                    options={selectOptions}
-                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level4))}
-                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level4', option!.value, 'fifth')}
-                    styles={selectStyles}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 5:</td>
-                <td>
-                  <Select
-                    options={selectOptions}
-                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level5))}
-                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level5', option!.value, 'fifth')}
-                    styles={selectStyles}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 6:</td>
-                <td>
-                  <Select
-                    options={selectOptions}
-                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level6))}
-                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level6', option!.value, 'fifth')}
-                    styles={selectStyles}
-                  />
-                </td>
-              </tr>
-              <tr>
                 <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 7:</td>
                 <td>
                   <Select
@@ -804,6 +794,15 @@ export default function CardsApp() {
                 </td>
               </tr>
               <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 4:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level4))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level4', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
                 <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 8:</td>
                 <td>
                   <Select
