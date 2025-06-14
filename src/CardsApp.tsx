@@ -326,6 +326,17 @@ export default function CardsApp() {
   const [currentScreen, setCurrentScreen] = useState<'start' | 'cards' | 'professions'>('start');
   const [compareMode, setCompareMode] = useState(false);
   const [userMap, setUserMap] = useState<any>(null);
+  const [showLastMapScreen, setShowLastMapScreen] = useState(false);
+  const [lastMap, setLastMap] = useState<any>(null);
+  const [currentStrategyScreen, setCurrentStrategyScreen] = useState(false);
+  const strategyList = [
+    'аутсайдер',
+    'потребитель',
+    'транслятор',
+    'автор',
+    'странник'
+  ];
+  const [strategyValues, setStrategyValues] = useState<number[]>([0, 0, 0, 0, 0]);
 
   // Всегда вычислять isValid на основе актуальных значений
   const isValid = currentRow === 'first'
@@ -473,6 +484,191 @@ export default function CardsApp() {
   };
 
   if (currentScreen === 'start') {
+    const showLastMap = () => {
+      const mapStr = localStorage.getItem('lastUserMap');
+      if (mapStr) {
+        setLastMap(JSON.parse(mapStr));
+        setShowLastMapScreen(true);
+      } else {
+        alert('Карта не найдена');
+      }
+    };
+    if (showLastMapScreen && lastMap) {
+      // Показ итоговой таблицы для lastMap
+      return (
+        <div className="app-container">
+          <h2>Последняя карта личности</h2>
+          <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px', textAlign: 'center' }}>
+            <tbody>
+              {/* Первый ряд */}
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>1 ряд</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Ухо</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Глаз</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Рука</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Нос и язык</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+                <td style={valueStyles[getValueLabel(lastMap.ear)]}>{getValueLabel(lastMap.ear)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.eye)]}>{getValueLabel(lastMap.eye)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.hand)]}>{getValueLabel(lastMap.hand)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.nose)]}>{getValueLabel(lastMap.nose)}</td>
+              </tr>
+              {/* Второй ряд */}
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>2 ряд</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Картинка</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Схема</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Текст</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+                <td style={valueStyles[getValueLabel(lastMap.picture)]}>{getValueLabel(lastMap.picture)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.scheme)]}>{getValueLabel(lastMap.scheme)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.text)]}>{getValueLabel(lastMap.text)}</td>
+              </tr>
+              {/* Третий ряд */}
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>3 ряд</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Образы</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Сценарии</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Смыслы</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+                <td style={valueStyles[getValueLabel(lastMap.images)]}>{getValueLabel(lastMap.images)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.scenarios)]}>{getValueLabel(lastMap.scenarios)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.meanings)]}>{getValueLabel(lastMap.meanings)}</td>
+              </tr>
+              {/* Четвертый ряд */}
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>4 ряд</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Холерик</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Сангвиник</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Флегматик</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Меланхолик</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+                <td style={valueStyles[getValueLabel(lastMap.choleric)]}>{getValueLabel(lastMap.choleric)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.sanguine)]}>{getValueLabel(lastMap.sanguine)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.phlegmatic)]}>{getValueLabel(lastMap.phlegmatic)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.melancholic)]}>{getValueLabel(lastMap.melancholic)}</td>
+              </tr>
+              {/* Пятый ряд: уровни 1,3,2,4 */}
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>5 ряд</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 1</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 3</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 2</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 4</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+                <td style={valueStyles[getValueLabel(lastMap.level1)]}>{getValueLabel(lastMap.level1)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.level3)]}>{getValueLabel(lastMap.level3)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.level2)]}>{getValueLabel(lastMap.level2)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.level4)]}>{getValueLabel(lastMap.level4)}</td>
+              </tr>
+              {/* Шестой ряд: уровни 5,7,6,8 */}
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>6 ряд</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 5</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 7</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 6</td>
+                <td style={{ padding: '10px', border: '1px solid #ddd' }}>Уровень 8</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 'bold', padding: '10px', border: '1px solid #ddd' }}>Значения</td>
+                <td style={valueStyles[getValueLabel(lastMap.level5)]}>{getValueLabel(lastMap.level5)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.level7)]}>{getValueLabel(lastMap.level7)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.level6)]}>{getValueLabel(lastMap.level6)}</td>
+                <td style={valueStyles[getValueLabel(lastMap.level8)]}>{getValueLabel(lastMap.level8)}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button
+            className="next-button"
+            style={{ marginTop: '30px', marginRight: '20px' }}
+            onClick={() => setShowLastMapScreen(false)}
+          >
+            ДОМОЙ
+          </button>
+          <button
+            className="next-button"
+            style={{ marginTop: '30px' }}
+            onClick={() => {
+              setUserMap(lastMap);
+              setCompareMode(true);
+              setCurrentScreen('professions');
+              setShowLastMapScreen(false);
+            }}
+          >
+            Сравнить с профессиями
+          </button>
+        </div>
+      );
+    }
+    if (currentStrategyScreen) {
+      const total = strategyValues.reduce((a, b) => a + b, 0);
+      const handleChange = (idx: number, value: string) => {
+        const arr = [...strategyValues];
+        arr[idx] = Math.max(0, Math.floor(Number(value) || 0));
+        setStrategyValues(arr);
+      };
+      const handleSave = () => {
+        localStorage.setItem('lastStrategy', JSON.stringify(strategyValues));
+        alert('Стратегии сохранены!');
+        setCurrentStrategyScreen(false);
+      };
+      return (
+        <div className="app-container" style={{ textAlign: 'center', marginTop: '60px' }}>
+          <h2>Распределите 100 баллов между стратегиями</h2>
+          <table style={{ margin: '0 auto', fontSize: '1.2em' }}>
+            <tbody>
+              {strategyList.map((strat, idx) => (
+                <tr key={strat}>
+                  <td style={{ padding: '10px 20px', textAlign: 'right' }}>{strat}</td>
+                  <td>
+                    <input
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={strategyValues[idx]}
+                      onChange={e => handleChange(idx, e.target.value)}
+                      style={{ fontSize: '1.2em', width: 80, textAlign: 'center' }}
+                      placeholder="0"
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div style={{ margin: '20px 0', fontWeight: 'bold', fontSize: '1.2em' }}>
+            Сумма: {total} / 100
+          </div>
+          <button
+            className="next-button"
+            style={{ fontSize: '1.2em', padding: '10px 30px', marginRight: 20 }}
+            onClick={() => setCurrentStrategyScreen(false)}
+          >
+            ДОМОЙ
+          </button>
+          <button
+            className="next-button"
+            style={{ fontSize: '1.2em', padding: '10px 30px' }}
+            onClick={handleSave}
+            disabled={total !== 100}
+          >
+            СОХРАНИТЬ
+          </button>
+          {total !== 100 && (
+            <div style={{ color: 'red', marginTop: 10 }}>Сумма баллов должна быть ровно 100</div>
+          )}
+        </div>
+      );
+    }
     return (
       <div className="app-container" style={{ textAlign: 'center', marginTop: '60px' }}>
         <h1>карта личности и карта задачи </h1>
@@ -481,7 +677,14 @@ export default function CardsApp() {
           style={{ fontSize: '1.5em', padding: '20px 40px', marginTop: '40px', marginRight: '20px' }}
           onClick={() => setCurrentScreen('cards')}
         >
-          карта личности
+          СОСТАВИТЬ КЛ
+        </button>
+        <button
+          className="next-button"
+          style={{ fontSize: '1.5em', padding: '20px 40px', marginTop: '40px' }}
+          onClick={showLastMap}
+        >
+          ПОКАЗАТЬ КЛ
         </button>
         <button
           className="next-button"
@@ -490,6 +693,13 @@ export default function CardsApp() {
         >
           Профессии
         </button>
+        <button
+          className="next-button"
+          style={{ fontSize: '1.5em', padding: '20px 40px', marginTop: '40px' }}
+          onClick={() => setCurrentStrategyScreen(true)}
+        >
+          СТРАТЕГИИ
+        </button>
       </div>
     );
   }
@@ -497,7 +707,11 @@ export default function CardsApp() {
   if (currentScreen === 'professions') {
     return (
       <Professions
-        onHome={() => { setCurrentScreen('start'); setCompareMode(false); }}
+        onHome={() => { 
+          setCurrentScreen('start'); 
+          setCompareMode(false);
+          setUserMap(null);
+        }}
         compareMode={compareMode}
         userMap={userMap}
       />
@@ -530,6 +744,8 @@ export default function CardsApp() {
       level7: fifthValues.level7,
       level8: fifthValues.level8
     };
+    // Сохраняем карту пользователя в localStorage
+    localStorage.setItem('lastUserMap', JSON.stringify(userMapObj));
     return (
       <div className="app-container">
         <h2>Итоговые результаты:</h2>
@@ -649,6 +865,9 @@ export default function CardsApp() {
     return (
       <div className="app-container">
         <h3>Проверьте и при необходимости исправьте значения:</h3>
+        <div style={{ display: 'none' }}>
+          Debug: currentScreen={currentScreen}, currentRow={currentRow}, step={step}
+        </div>
         {currentRow === 'first' ? (
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <tbody>
@@ -943,6 +1162,9 @@ export default function CardsApp() {
 
   return (
     <div className="app-container">
+      <div style={{ display: 'none' }}>
+        Debug: currentScreen={currentScreen}, currentRow={currentRow}, step={step}
+      </div>
       {currentRow === 'first' ? (
         step < firstRowQuestions.length ? (
           <div>

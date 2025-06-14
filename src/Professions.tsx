@@ -11,11 +11,31 @@ export const personalityKeys = [
 
 // Карты профессий: массивы чисел в том же порядке, что personalityKeys
 export const professionMaps: Record<string, number[]> = {
-  'Программист': [1, 0, -1, 1, 1, 0, -1, 1, 0, -1, 1, 0, 0, -1, 1, 0, -1, 1, 0, -1, 1, 0],
-  'Дизайнер':    [0, 1, 1, -1, 0, 1, 1, -1, 0, 1, 0, 1, -1, 1, 0, 1, -1, 0, 1, -1, 0, 1],
-  'Учитель':     [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-  'Врач':        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-  'Инженер':     [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+  'Программист': [0, 0, 1, -1,
+     1, 0, 1, 
+     0, 1, 1,
+      1, 1, 1, 0,
+       0, 0, 1, 0, 0, 1, 1, 0],
+  'Дизайнер':    [-1, 1, 1, 0,
+     0, 1, 0, 
+     1, 0, 0,
+      0, 1, 1, 1,
+       0, 1, 0, 0, 1, -1, 0, 1],
+  'Учитель':     [1, 1, 0, 0,
+     1, 0, 0,
+      0, 1, 1,
+       1, 0, 1, 0, 
+       -1, 0, 1, 1, 1, 0, 0, 0],
+  'Врач':        [1, 1, 1, -1,
+    1, 1, 0,
+      0, 1, 1,
+       1, 0, 1, 0,
+        1, 0, 0, 1, 1, 0, 0, 0],
+  'Инженер':     [0, 1, 1, 0,
+     0, 1, 1,
+      0, 1, 1, 
+      0, 1, 1, 0, 
+      -1, -1, 0, 1, 1, 1, 0, 0]
 };
 
 const professionsList = Object.keys(professionMaps);
@@ -65,7 +85,7 @@ export default function Professions({ onHome, compareMode, userMap }: Profession
       }
       return {
         profession: prof,
-        pairs: [pair1, pair2, pair3]
+        pairs: [pair1, pair2, pair3] as [number, number, number]
       };
     });
     setCompareResult(result);
@@ -89,57 +109,46 @@ export default function Professions({ onHome, compareMode, userMap }: Profession
           </label>
         ))}
       </div>
-      {compareMode || userMap ? (
-        !compareResult ? (
-          <button
-            className="next-button"
-            style={{ marginBottom: 30 }}
-            onClick={compareWithProfessions}
-            disabled={selected.length === 0}
-          >
-            ВЫЧИСЛИТЬ
-          </button>
-        ) : (
-          <>
-            <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 30, textAlign: 'center' }}>
-              <thead>
-                <tr>
-                  <th style={{ padding: '10px', border: '1px solid #ddd' }}>Профессия</th>
-                  <th style={{ padding: '10px', border: '1px solid #ddd' }}>БЛОК</th>
-                  <th style={{ padding: '10px', border: '1px solid #ddd' }}>НЕУСПЕХ</th>
-                  <th style={{ padding: '10px', border: '1px solid #ddd' }}>УСПЕХ</th>
+      {!compareResult && selected.length > 0 && (
+        <button
+          className="next-button"
+          style={{ marginBottom: 30 }}
+          onClick={compareWithProfessions}
+          disabled={!userMap}
+        >
+          ВЫЧИСЛИТЬ
+        </button>
+      )}
+      {compareResult && (
+        <>
+          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 30, textAlign: 'center' }}>
+            <thead>
+              <tr>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}>Профессия</th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}>БЛОК</th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}>НЕУСПЕХ</th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}>УСПЕХ</th>
+              </tr>
+            </thead>
+            <tbody>
+              {compareResult.map(row => (
+                <tr key={row.profession}>
+                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{row.profession}</td>
+                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{row.pairs[0]}</td>
+                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{row.pairs[1]}</td>
+                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{row.pairs[2]}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {compareResult.map(row => (
-                  <tr key={row.profession}>
-                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{row.profession}</td>
-                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{row.pairs[0]}</td>
-                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{row.pairs[1]}</td>
-                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{row.pairs[2]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <button
-              className="next-button"
-              style={{ marginBottom: 30 }}
-              onClick={() => setCompareResult(null)}
-            >
-              Назад к выбору
-            </button>
-          </>
-        )
-      ) : (
-        selected.length > 0 && (
+              ))}
+            </tbody>
+          </table>
           <button
             className="next-button"
             style={{ marginBottom: 30 }}
-            onClick={compareWithProfessions}
+            onClick={() => setCompareResult(null)}
           >
-            ВЫЧИСЛИТЬ
+            Назад к выбору
           </button>
-        )
+        </>
       )}
     </div>
   );
