@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Select from 'react-select';
 import type { StylesConfig, SingleValue } from 'react-select';
 import Professions from './Professions';
+import TaskDistribution from './TaskDistribution';
 
 // Структура для первого ряда
 const firstRow = {
@@ -323,7 +324,7 @@ export default function CardsApp() {
   const [showCorrection, setShowCorrection] = useState(false);
   const [showFinalResults, setShowFinalResults] = useState(false);
   const [currentRow, setCurrentRow] = useState<'first' | 'second' | 'third' | 'fourth' | 'fifth'>('first');
-  const [currentScreen, setCurrentScreen] = useState<'start' | 'cards' | 'professions'>('start');
+  const [currentScreen, setCurrentScreen] = useState<'start' | 'cards' | 'professions' | 'tasks'>('start');
   const [compareMode, setCompareMode] = useState(false);
   const [userMap, setUserMap] = useState<any>(null);
   const [showLastMapScreen, setShowLastMapScreen] = useState(false);
@@ -700,6 +701,13 @@ export default function CardsApp() {
         >
           СТРАТЕГИИ
         </button>
+        <button
+          className="next-button"
+          style={{ fontSize: '1.5em', padding: '20px 40px', marginTop: '40px' }}
+          onClick={() => setCurrentScreen('tasks')}
+        >
+          ЗАДАЧИ
+        </button>
       </div>
     );
   }
@@ -716,6 +724,10 @@ export default function CardsApp() {
         userMap={userMap}
       />
     );
+  }
+
+  if (currentScreen === 'tasks') {
+    return <TaskDistribution />;
   }
 
   if (showFinalResults) {
