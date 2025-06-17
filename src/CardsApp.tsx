@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Select from 'react-select';
 import type { StylesConfig, SingleValue } from 'react-select';
 import Professions from './Professions';
 import TaskDistribution from './TaskDistribution';
+import { auth } from './services/api';
 
 // Структура для первого ряда
 const firstRow = {
@@ -314,13 +315,45 @@ function getValueLabel(value: number): ValueLabel {
   return value === 1 ? 'много' : value === 0 ? 'средне' : 'мало';
 }
 
-export default function CardsApp() {
+interface CardsAppProps {
+  initialPersonalityMap?: Record<string, number> | null;
+  onPersonalityMapUpdate?: (map: Record<string, number>) => void;
+}
+
+export default function CardsApp({ initialPersonalityMap, onPersonalityMapUpdate }: CardsAppProps) {
   const [step, setStep] = useState(0);
-  const [values, setValues] = useState(firstRow);
-  const [secondValues, setSecondValues] = useState(secondRow);
-  const [thirdValues, setThirdValues] = useState(thirdRow);
-  const [fourthValues, setFourthValues] = useState(fourthRow);
-  const [fifthValues, setFifthValues] = useState(fifthRow);
+  const [values, setValues] = useState(() => initialPersonalityMap ? {
+    ear: initialPersonalityMap.ear ?? 0,
+    eye: initialPersonalityMap.eye ?? 0,
+    hand: initialPersonalityMap.hand ?? 0,
+    nose: initialPersonalityMap.nose ?? 0,
+  } : firstRow);
+  const [secondValues, setSecondValues] = useState(() => initialPersonalityMap ? {
+    picture: initialPersonalityMap.picture ?? 0,
+    scheme: initialPersonalityMap.scheme ?? 0,
+    text: initialPersonalityMap.text ?? 0,
+  } : secondRow);
+  const [thirdValues, setThirdValues] = useState(() => initialPersonalityMap ? {
+    images: initialPersonalityMap.images ?? 0,
+    scenarios: initialPersonalityMap.scenarios ?? 0,
+    meanings: initialPersonalityMap.meanings ?? 0,
+  } : thirdRow);
+  const [fourthValues, setFourthValues] = useState(() => initialPersonalityMap ? {
+    choleric: initialPersonalityMap.choleric ?? 0,
+    sanguine: initialPersonalityMap.sanguine ?? 0,
+    phlegmatic: initialPersonalityMap.phlegmatic ?? 0,
+    melancholic: initialPersonalityMap.melancholic ?? 0,
+  } : fourthRow);
+  const [fifthValues, setFifthValues] = useState(() => initialPersonalityMap ? {
+    level1: initialPersonalityMap.level1 ?? 0,
+    level2: initialPersonalityMap.level2 ?? 0,
+    level3: initialPersonalityMap.level3 ?? 0,
+    level4: initialPersonalityMap.level4 ?? 0,
+    level5: initialPersonalityMap.level5 ?? 0,
+    level6: initialPersonalityMap.level6 ?? 0,
+    level7: initialPersonalityMap.level7 ?? 0,
+    level8: initialPersonalityMap.level8 ?? 0,
+  } : fifthRow);
   const [showCorrection, setShowCorrection] = useState(false);
   const [showFinalResults, setShowFinalResults] = useState(false);
   const [currentRow, setCurrentRow] = useState<'first' | 'second' | 'third' | 'fourth' | 'fifth'>('first');
@@ -338,6 +371,55 @@ export default function CardsApp() {
     'странник'
   ];
   const [strategyValues, setStrategyValues] = useState<number[]>([0, 0, 0, 0, 0]);
+
+  // Сброс состояния при смене initialPersonalityMap (например, при входе под новым пользователем)
+  useEffect(() => {
+    if (initialPersonalityMap) {
+      setValues({
+        ear: initialPersonalityMap.ear ?? 0,
+        eye: initialPersonalityMap.eye ?? 0,
+        hand: initialPersonalityMap.hand ?? 0,
+        nose: initialPersonalityMap.nose ?? 0,
+      });
+      setSecondValues({
+        picture: initialPersonalityMap.picture ?? 0,
+        scheme: initialPersonalityMap.scheme ?? 0,
+        text: initialPersonalityMap.text ?? 0,
+      });
+      setThirdValues({
+        images: initialPersonalityMap.images ?? 0,
+        scenarios: initialPersonalityMap.scenarios ?? 0,
+        meanings: initialPersonalityMap.meanings ?? 0,
+      });
+      setFourthValues({
+        choleric: initialPersonalityMap.choleric ?? 0,
+        sanguine: initialPersonalityMap.sanguine ?? 0,
+        phlegmatic: initialPersonalityMap.phlegmatic ?? 0,
+        melancholic: initialPersonalityMap.melancholic ?? 0,
+      });
+      setFifthValues({
+        level1: initialPersonalityMap.level1 ?? 0,
+        level2: initialPersonalityMap.level2 ?? 0,
+        level3: initialPersonalityMap.level3 ?? 0,
+        level4: initialPersonalityMap.level4 ?? 0,
+        level5: initialPersonalityMap.level5 ?? 0,
+        level6: initialPersonalityMap.level6 ?? 0,
+        level7: initialPersonalityMap.level7 ?? 0,
+        level8: initialPersonalityMap.level8 ?? 0,
+      });
+    } else {
+      setValues(firstRow);
+      setSecondValues(secondRow);
+      setThirdValues(thirdRow);
+      setFourthValues(fourthRow);
+      setFifthValues(fifthRow);
+    }
+    setStep(0);
+    setShowCorrection(false);
+    setShowFinalResults(false);
+    setCurrentRow('first');
+    setCurrentScreen('start');
+  }, [initialPersonalityMap]);
 
   // Всегда вычислять isValid на основе актуальных значений
   const isValid = currentRow === 'first'
@@ -756,8 +838,10 @@ export default function CardsApp() {
       level7: fifthValues.level7,
       level8: fifthValues.level8
     };
-    // Сохраняем карту пользователя в localStorage
-    localStorage.setItem('lastUserMap', JSON.stringify(userMapObj));
+    // Сохраняем карту пользователя в базу через API
+    auth.updatePersonalityMap(userMapObj).catch(() => {/* ignore error for now */});
+    // Обновляем карту в родительском компоненте
+    if (onPersonalityMapUpdate) onPersonalityMapUpdate(userMapObj);
     return (
       <div className="app-container">
         <h2>Итоговые результаты:</h2>

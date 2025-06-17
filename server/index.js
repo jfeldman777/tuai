@@ -18,7 +18,7 @@ app.use('/api/tasks', taskRoutes);
 app.use('/api/comparisons', comparisonRoutes);
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/personality-map')
+mongoose.connect('mongodb+srv://jacobfeldman:cu1aIcjPn2sUZNVx@cluster0.aycvo4x.mongodb.net/personality-map?retryWrites=true&w=majority')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
