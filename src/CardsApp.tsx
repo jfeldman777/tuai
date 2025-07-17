@@ -149,7 +149,9 @@ const fifthRowQuestions = [
   }
 ];
 
-function checkDistribution(values: Record<string, number>, expected: { много: number, средне: number, мало: number }, fourthRowValues?: Record<string, number>): boolean {
+function checkDistribution(values: Record<string, number>,
+   expected: { много: number, средне: number, мало: number },
+   fourthRowValues?: Record<string, number>): boolean {
   const counts = {
     много: 0,
     средне: 0,
@@ -1128,7 +1130,8 @@ export default function CardsApp() {
             </tbody>
           </table>
         )}
-        {isValid && (
+        {//isValid && 
+        (
           <button 
             onClick={currentRow === 'fifth' ? () => {
               setShowFinalResults(true);
@@ -1138,7 +1141,8 @@ export default function CardsApp() {
             {currentRow === 'fifth' ? 'ГОТОВО' : 'ДАЛЬШЕ'}
           </button>
         )}
-        {!isValid && (
+        {//!isValid &&
+         (
           <div className="error-message" style={{ fontSize: '1.3em', fontWeight: 'bold' }}>
             {currentRow === 'first'
               ? 'Пожалуйста, исправьте значения так, чтобы было хотя бы одно "много", хотя бы одно "средне" и хотя бы одно "мало"'
