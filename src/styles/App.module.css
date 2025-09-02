@@ -1,0 +1,84 @@
+.appContainer {
+  min-height: 100vh;
+  background: #f7f9fb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-items: center;
+  padding-top: 32px;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 0 12px;
+}
+
+.correctionFields {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+  padding: 0 4vw;
+}
+
+.contentBox {
+  width: 100%;
+  max-width: 420px;
+  background: transparent;
+  padding: 28px 10px 28px 10px;
+  border-radius: 16px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .appContainer {
+    padding-top: 6px;
+    min-height: 100dvh;
+    width: 100vw;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .correctionFields {
+    max-width: 100vw;
+    padding: 0 2vw;
+    gap: 10px;
+  }
+  .contentBox {
+    padding: 12px 2vw;
+    max-width: 100vw;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .appContainer {
+    padding-top: 2px;
+    font-size: 0.98em;
+  }
+  .correctionFields, .contentBox {
+    padding-left: 1vw;
+    padding-right: 1vw;
+  }
+}
+
+.verticalButtonList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; 
+  align-items: center;
+  width: 100%;
+  max-width: 340px;
+}
+
+.topBar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start; /* или center */
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
