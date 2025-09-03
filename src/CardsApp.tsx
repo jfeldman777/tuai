@@ -69,12 +69,14 @@ const fifthRowQuestions = [
   { text: 'Я умею моделировать чужое сознание как неоднородное своему', effects: { level8: 1 } },
 ];
 
-function checkDistribution(
-  values: Record<string, number>,
-  expected: { много: number; средне: number; мало: number },
-  fourthRowValues?: Record<string, number>
-): boolean {
-  const counts = { много: 0, средне: 0, мало: 0 };
+function checkDistribution(values: Record<string, number>,
+   expected: { много: number, средне: number, мало: number },
+   fourthRowValues?: Record<string, number>): boolean {
+  const counts = {
+    много: 0,
+    средне: 0,
+    мало: 0
+  };
 
   Object.values(values).forEach((value) => {
     if (value === 1) counts.много++;
@@ -804,16 +806,280 @@ export default function CardsApp() {
             </label>
           ))}
         </div>
-
-        {isValid ? (
-          <button
-            className={btn.button}
-            onClick={currentRow === 'fifth' ? () => setShowFinalResults(true) : handleNext}
+        {currentRow === 'first' ? (
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Ухо:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(values.ear))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('ear', option!.value, 'first')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Глаз:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(values.eye))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('eye', option!.value, 'first')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Рука:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(values.hand))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('hand', option!.value, 'first')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Нос и язык:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(values.nose))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('nose', option!.value, 'first')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        ) : currentRow === 'second' ? (
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Картинка:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(secondValues.picture))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('picture', option!.value, 'second')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Схема:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(secondValues.scheme))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('scheme', option!.value, 'second')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Текст:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(secondValues.text))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('text', option!.value, 'second')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        ) : currentRow === 'third' ? (
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Образы:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(thirdValues.images))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('images', option!.value, 'third')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Сценарии:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(thirdValues.scenarios))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('scenarios', option!.value, 'third')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Смыслы:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(thirdValues.meanings))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('meanings', option!.value, 'third')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        ) : currentRow === 'fourth' ? (
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Холерик:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fourthValues.choleric))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('choleric', option!.value, 'fourth')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Сангвиник:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fourthValues.sanguine))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('sanguine', option!.value, 'fourth')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Флегматик:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fourthValues.phlegmatic))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('phlegmatic', option!.value, 'fourth')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Меланхолик:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fourthValues.melancholic))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('melancholic', option!.value, 'fourth')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        ) : (
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 1:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level1))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level1', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 5:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level5))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level5', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 2:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level2))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level2', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 6:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level6))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level6', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 3:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level3))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level3', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 7:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level7))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level7', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 4:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level4))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level4', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
+                <td style={{ fontSize: '2em', padding: '10px' }}>Уровень 8:</td>
+                <td>
+                  <Select
+                    options={selectOptions}
+                    value={selectOptions.find(o => o.value === getValueLabel(fifthValues.level8))}
+                    onChange={(option: SingleValue<OptionType>) => handleValueChange('level8', option!.value, 'fifth')}
+                    styles={selectStyles}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        )}
+        {//isValid && 
+        (
+          <button 
+            onClick={currentRow === 'fifth' ? () => {
+              setShowFinalResults(true);
+            } : handleNext}
+            className="next-button"
           >
             {currentRow === 'fifth' ? 'Готово' : 'Дальше'}
           </button>
-        ) : (
-          <div className={typo.errorMessage}>
+        )}
+        {//!isValid &&
+         (
+          <div className="error-message" style={{ fontSize: '1.3em', fontWeight: 'bold' }}>
             {currentRow === 'first'
               ? 'Пожалуйста, исправьте значения так, чтобы было хотя бы одно "много", хотя бы одно "средне" и хотя бы одно "мало"'
               : currentRow === 'fourth'
