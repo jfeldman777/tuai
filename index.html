@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ТУАИ: Тест «Уровень мышления»</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>ТУАИ • Тест «Уровень мышления»</h1>
+      <p class="sub">10 коротких вопросов — узнай свой доминирующий уровень (1–8) и соседние уровни. Данные не отправляются на сервер.</p>
+    </header>
+
+    <section id="quiz"></section>
+
+    <nav class="controls">
+      <button id="prevBtn" class="btn" disabled>Назад</button>
+      <button id="nextBtn" class="btn primary">Дальше</button>
+      <button id="finishBtn" class="btn success" style="display:none">Готово</button>
+    </nav>
+
+    <section id="result" class="result" aria-live="polite"></section>
+
+    <footer>
+      <details>
+        <summary>О шкале уровней (кратко)</summary>
+        <ul class="levels">
+          <li><b>1</b> — магическое сознание (интуитивное действие)</li>
+          <li><b>2</b> — этическое сознание (свой/чужой)</li>
+          <li><b>3</b> — эстетическое сознание (процесс, результат)</li>
+          <li><b>4</b> — ролевое сознание (правила, ритуал)</li>
+          <li><b>5</b> — свободное сознание (выбор, риск)</li>
+          <li><b>6</b> — теоретическое сознание (причинность, закон)</li>
+          <li><b>7</b> — парадоксальное сознание (пересборка)</li>
+          <li><b>8</b> — универсальное сознание (согласование систем)</li>
+        </ul>
+      </details>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
